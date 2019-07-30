@@ -1,0 +1,13 @@
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/reflection/IReflectionTools.java
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/annotations/DataLayerAnnotationsProcessor.java
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/reflection/CachedEntityField.java
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/annotations/IEquatableIgnores.java
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/annotations/IEquatableIgnore.java
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/reflection/ReflectionService.java
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/mutations/IEquatable.java
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/annotations/GetAllBy.java
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/dao/GenericDao.java
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/persistence/PersistableEntity.java
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/reflection/CachedEntityType.java
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/annotations/GetBy.java
+/home/dave01/sanda/src/main/java/org/sindaryn/sanda/StaticUtils.java

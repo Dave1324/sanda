@@ -86,7 +86,7 @@ public class DataLayerAnnotationsProcessor extends AbstractProcessor {
             JavaFileObject builderFile = processingEnv.getFiler().createSourceFile(className + "Dao");
             PrintWriter out = new PrintWriter(builderFile.openWriter());
             out.println(packageName + ";\n\n");
-            String content = builder.toString().replaceAll("^package [a-zA-Z0-9]+[.a-zA-Z0-9]*;", "");
+            String content = builder.build().toString().replaceAll("^package [a-zA-Z0-9]+[.a-zA-Z0-9]*;", "");
             out.print(content);
         } catch (IOException e) {
             e.printStackTrace();

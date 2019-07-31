@@ -178,23 +178,23 @@ public class DataAccessor<T> {
         return daoMap.get(clazzName).exists(example);
     }
 
-    public T getBy(Class<T> clazz, String attributeName){
+    public T getBy(Class<T> clazz, String attributeName, String attributeValue){
         try{
             GenericDao dao = daoMap.get(clazz.getSimpleName());
             Class<?>[] params = new Class<?>[]{String.class};
             Method methodToInvoke = dao.getClass().getMethod("findBy" + toPascalCase(attributeName), params);
-            return (T) methodToInvoke.invoke(dao, new Object[]{attributeName});
+            return (T) methodToInvoke.invoke(dao, new Object[]{attributeValue});
         }catch (Exception e){
             throw new RuntimeException(e);
         }
     }
 
-    public List<T> getAllBy(Class<T> clazz, String attributeName){
+    public List<T> getAllBy(Class<T> clazz, String attributeName, String attributeValue){
         try{
             GenericDao dao = daoMap.get(clazz.getSimpleName());
             Class<?>[] params = new Class<?>[]{String.class};
             Method methodToInvoke = dao.getClass().getMethod("findAllBy" + toPascalCase(attributeName), params);
-            return (List<T>) methodToInvoke.invoke(dao, new Object[]{attributeName});
+            return (List<T>) methodToInvoke.invoke(dao, new Object[]{attributeValue});
         }catch (Exception e){
             throw new RuntimeException(e);
         }

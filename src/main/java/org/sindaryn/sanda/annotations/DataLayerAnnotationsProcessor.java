@@ -51,7 +51,7 @@ public class DataLayerAnnotationsProcessor extends AbstractProcessor {
                             .addMember(
                                     "basePackages",
                                     "{$S, $S}",
-                                    "org.sindaryn.sanda", basePackageName)
+                                    "org.sindaryn.sanda")
                             .build());
             writeToJavaFile(simpleClassName, basePackageName, builder, processingEnv, "Configuration source file");
         }

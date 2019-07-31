@@ -2,7 +2,6 @@ package org.sindaryn.sanda.annotations;
 
 
 import com.google.auto.service.AutoService;
-import com.google.common.collect.Sets;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -13,9 +12,7 @@ import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.*;
 import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
@@ -127,11 +124,8 @@ public class DataLayerAnnotationsProcessor extends AbstractProcessor {
     }
 
     private Set<? extends TypeElement> getEntities(RoundEnvironment roundEnvironment) {
-        Set<? extends TypeElement> annotatedWithEntity = (Set<? extends TypeElement>)
-                roundEnvironment.getElementsAnnotatedWith(Entity.class);
-        Set<? extends TypeElement> annotatedWithTable = (Set<? extends TypeElement>)
-                roundEnvironment.getElementsAnnotatedWith(Table.class);
-        return Sets.intersection(annotatedWithEntity, annotatedWithTable);
+        return (Set<? extends TypeElement>)
+                roundEnvironment.getElementsAnnotatedWith(PersistableEntity.class);
     }
 
 

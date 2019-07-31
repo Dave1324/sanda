@@ -1,4 +1,4 @@
-package org.sindaryn.sanda.dao;
+package org.sindaryn.sanda;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -4,8 +4,9 @@ package org.sindaryn.sanda.annotations;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
-import org.sindaryn.sanda.dao.GenericDao;
+import org.sindaryn.sanda.GenericDao;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.processing.*;
@@ -75,7 +76,7 @@ public class DataLayerAnnotationsProcessor extends AbstractProcessor {
                                     .addParameter(
                                             ClassName.get(entity),
                                             annotatedField.getSimpleName().toString())
-                                    .returns(ClassName.get(entity))
+                                    .returns(ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(entity)))
                                     .build());
                 }
             });

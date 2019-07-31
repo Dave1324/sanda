@@ -1,7 +1,7 @@
 package org.sindaryn.sanda.mutations;
 
 import lombok.val;
-import org.sindaryn.sanda.reflection.ReflectionService;
+import org.sindaryn.sanda.reflection.ReflectionCache;
 
 import javax.persistence.ElementCollection;
 import java.lang.reflect.Field;
@@ -11,11 +11,11 @@ import static org.sindaryn.sanda.reflection.IReflectionTools.getClassFields;
 
 public interface IEquatable<T> {
     @SuppressWarnings("unchecked")
-    default void setEqualTo(T other, ReflectionService reflectionService){
+    default void setEqualTo(T other, ReflectionCache reflectionCache){
         Collection<String> nonUpdatableFields =
-                reflectionService.getNonUpdatableFields(this.getClass());
+                reflectionCache.getNonUpdatableFields(this.getClass());
         Collection<Field> fields =
-                reflectionService
+                reflectionCache
                         .getFieldsOf(
                                 this.getClass(),
                                 nonUpdatableFields);
@@ -28,7 +28,7 @@ public interface IEquatable<T> {
                 if(sourceField == null) continue;
                 //if field is an embedded entity, we need to recursively update all of its fields
                 if(isEmbeddedIEquatable(currentField))
-                    ((IEquatable) targetField).setEqualTo(sourceField, reflectionService);
+                    ((IEquatable) targetField).setEqualTo(sourceField, reflectionCache);
                     //if field is a collection, that's outside of this use case,
                 else if(isAssignable(currentField))
                     //else, (...finally) update field value

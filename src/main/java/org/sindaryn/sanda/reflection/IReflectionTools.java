@@ -100,11 +100,11 @@ public interface IReflectionTools {
         }
         throw new RuntimeException("No @Id field found for type " + clazz.getSimpleName());
     }
-    static boolean isEmbeddedEntity(Field field, ReflectionService reflectionService){
+    static boolean isEmbeddedEntity(Field field, ReflectionCache reflectionCache){
         if(!field.getDeclaringClass().isAnnotationPresent(Entity.class)) return false;
         Class<?> type = field.getType();
         if (primitiveTypeOrEnum(type) != null
-                || isCollectionOrMapOfPrimitives(field.getName(), field.getDeclaringClass().getSimpleName(), reflectionService))
+                || isCollectionOrMapOfPrimitives(field.getName(), field.getDeclaringClass().getSimpleName(), reflectionCache))
             return false;
         else
             return !isId(field);
@@ -114,15 +114,15 @@ public interface IReflectionTools {
         return type.getAnnotation(EmbeddedId.class) != null || type.getAnnotation(Id.class) != null;
     }
 
-    static boolean isCollectionOrMapOfPrimitives(String fieldName, String declaringClassName, ReflectionService reflectionService) {
+    static boolean isCollectionOrMapOfPrimitives(String fieldName, String declaringClassName, ReflectionCache reflectionCache) {
         fieldName = fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
         val temp =
-                reflectionService
+                reflectionCache
                         .getCachedEntityTypes()
                         .get(declaringClassName);
         try {
             CachedEntityField field =
-                    reflectionService
+                    reflectionCache
                             .getCachedEntityTypes()
                             .get(declaringClassName)
                             .getFields()

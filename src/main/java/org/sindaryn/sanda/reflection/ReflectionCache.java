@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 @Component
-public class ReflectionService implements IReflectionTools {
+public class ReflectionCache implements IReflectionTools {
 
     private Reflections reflectionsHelper;
     @Getter

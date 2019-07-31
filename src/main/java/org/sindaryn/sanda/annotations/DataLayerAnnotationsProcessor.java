@@ -50,7 +50,7 @@ public class DataLayerAnnotationsProcessor extends AbstractProcessor {
                     .addAnnotation(AnnotationSpec.builder(ComponentScan.class)
                             .addMember(
                                     "basePackages",
-                                    "{$S, $S}",
+                                    "{$S}",
                                     "org.sindaryn.sanda")
                             .build());
             writeToJavaFile(simpleClassName, basePackageName, builder, processingEnv, "Configuration source file");

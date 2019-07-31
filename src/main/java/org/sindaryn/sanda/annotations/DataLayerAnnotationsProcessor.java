@@ -2,11 +2,10 @@ package org.sindaryn.sanda.annotations;
 
 
 import com.google.auto.service.AutoService;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
-import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.*;
 import org.sindaryn.sanda.GenericDao;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.processing.*;
@@ -35,10 +34,24 @@ public class DataLayerAnnotationsProcessor extends AbstractProcessor {
             if (!annotatedFields.isEmpty()) annotatedFieldsMap.put(entity, annotatedFields);
         }
         entities.forEach(entity -> generateDao(entity, annotatedFieldsMap));
+        setComponentScan(entities);
         return false;
     }
 
-
+    private void setComponentScan(Set<? extends TypeElement> entities) {
+        if(!entities.isEmpty()){
+            String className = entities.iterator().next().getQualifiedName().toString();
+            int firstDot = className.indexOf('.');
+            String basePackageName = className.substring(0, firstDot);
+            String simpleClassName = "DatafiConfiguration";
+            TypeSpec.Builder builder = TypeSpec.classBuilder(simpleClassName)
+                    .addAnnotation(Configuration.class)
+                    .addAnnotation(AnnotationSpec.builder(ComponentScan.class)
+                            .addMember("value", "$S", "org.sindaryn.sanda")
+                            .build());
+            writeToJavaFile(simpleClassName, basePackageName, builder, processingEnv, "Configuration source file");
+        }
+    }
 
 
     private void generateDao(TypeElement entity, Map<TypeElement, List<VariableElement>> annotatedFieldsMap) {
@@ -81,7 +94,7 @@ public class DataLayerAnnotationsProcessor extends AbstractProcessor {
                 }
             });
         }
-        writeToJavaFile(entity, packageName, builder, processingEnv, "JpaRepository");
+        writeToJavaFile(entity.getSimpleName().toString(), packageName, builder, processingEnv, "JpaRepository");
     }
 
     private ClassName getIdType(TypeElement entity) {

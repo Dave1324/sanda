@@ -3,6 +3,7 @@ package org.sindaryn.sanda.annotations;
 
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import org.sindaryn.sanda.dao.GenericDao;
@@ -14,9 +15,7 @@ import javax.lang.model.element.*;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Id;
 import javax.tools.Diagnostic;
-import javax.tools.JavaFileObject;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.*;
 
 import static com.squareup.javapoet.ParameterizedTypeName.get;
@@ -82,7 +81,16 @@ public class DataLayerAnnotationsProcessor extends AbstractProcessor {
                 }
             });
         }
+        final TypeSpec newClass = builder.build();
+        final JavaFile javaFile = JavaFile.builder(packageName, newClass).build();
+
         try {
+            javaFile.writeTo(System.out);
+            javaFile.writeTo(processingEnv.getFiler());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*try {
             JavaFileObject builderFile = processingEnv.getFiler().createSourceFile(className + "Dao");
             PrintWriter out = new PrintWriter(builderFile.openWriter());
             out.println(packageName + ";\n\n");
@@ -90,7 +98,7 @@ public class DataLayerAnnotationsProcessor extends AbstractProcessor {
             out.print(content);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private ClassName getIdType(TypeElement entity) {

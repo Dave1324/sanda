@@ -41,8 +41,8 @@ public class DataLayerAnnotationsProcessor extends AbstractProcessor {
     private void setComponentScan(Set<? extends TypeElement> entities) {
         if(!entities.isEmpty()){
             String className = entities.iterator().next().getQualifiedName().toString();
-            int firstDot = className.indexOf('.');
-            String basePackageName = className.substring(0, firstDot);
+            int lastdot = className.lastIndexOf('.');
+            String basePackageName = className.substring(0, lastdot);
             String simpleClassName = "DatafiConfiguration";
             TypeSpec.Builder builder = TypeSpec.classBuilder(simpleClassName)
                     .addModifiers(Modifier.PUBLIC)

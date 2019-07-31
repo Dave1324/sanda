@@ -1,9 +1,6 @@
 package org.sindaryn.sanda.persistence;
 
-import io.leangen.graphql.annotations.GraphQLIgnore;
-import io.leangen.graphql.annotations.GraphQLQuery;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.sindaryn.sanda.annotations.IEquatableIgnore;
@@ -20,20 +17,15 @@ public class PersistableEntity<T, TID >
         implements IEquatable<T>, Serializable {
     @EmbeddedId
     @NonNull
-    @Getter(onMethod_ = {@GraphQLIgnore})
     @Column(name = "id", unique=true, nullable=false, updatable=false)
     private TID id;
-    @GraphQLQuery(name = "id")
     public String secureId(){
         return id.toString();
     }
-    @Getter(onMethod_ = {@GraphQLIgnore})
     @IEquatableIgnore
     private Boolean isFirstPersist = true;
-    @Getter(onMethod_ = {@GraphQLIgnore})
     @IEquatableIgnore
     private Boolean isArchived = false;
-    @Getter(onMethod_ = {@GraphQLIgnore})
     @IEquatableIgnore
     @Version
     private Long version = 0L;

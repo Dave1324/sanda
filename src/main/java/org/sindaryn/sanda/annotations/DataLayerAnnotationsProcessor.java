@@ -47,7 +47,7 @@ public class DataLayerAnnotationsProcessor extends AbstractProcessor {
             TypeSpec.Builder builder = TypeSpec.classBuilder(simpleClassName)
                     .addAnnotation(Configuration.class)
                     .addAnnotation(AnnotationSpec.builder(ComponentScan.class)
-                            .addMember("value", "$S", "org.sindaryn.sanda")
+                            .addMember("basePackages", "$S", "org.sindaryn.sanda")
                             .build());
             writeToJavaFile(simpleClassName, basePackageName, builder, processingEnv, "Configuration source file");
         }

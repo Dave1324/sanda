@@ -26,7 +26,7 @@ import static com.squareup.javapoet.ParameterizedTypeName.get;
 import static org.sindaryn.sanda.StaticUtils.toPascalCase;
 
 @SuppressWarnings("unchecked")
-@SupportedAnnotationTypes({"javax.root.persistence.Entity", "javax.root.persistence.Table", "root.annotations.GetBy"})
+@SupportedAnnotationTypes("org.sindaryn.sanda.annotations.PersistableEntity")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
 public class DataLayerAnnotationsProcessor extends AbstractProcessor {
@@ -41,6 +41,9 @@ public class DataLayerAnnotationsProcessor extends AbstractProcessor {
         entities.forEach(entity -> generateDao(entity, annotatedFieldsMap));
         return false;
     }
+
+
+
 
     private void generateDao(TypeElement entity, Map<TypeElement, List<VariableElement>> annotatedFieldsMap) {
         String className = entity.getQualifiedName().toString();
